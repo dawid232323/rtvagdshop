@@ -1,0 +1,16 @@
+version: '3.8'
+name: rtvagdstore
+services:
+    database:
+        image: postgres:16.1-alpine
+        restart: always
+        env_file: './.env'
+        volumes:
+            - rtvAgdStore-db:/var/lib/postgresql/data
+        ports:
+            - '5432:5432'
+volumes:
+    rtvAgdStore-db:
+networks:
+    rtvAgdStore-network:
+        driver: bridge

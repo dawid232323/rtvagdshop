@@ -1,0 +1,109 @@
+databaseChangeLog:
+    -   changeSet:
+            id: 0.0.1
+            author: dawid232323
+            changes:
+                - createSequence:
+                        sequenceName: product_topic_id_seq
+                        startValue: 1
+                        incrementBy: 1
+                - createSequence:
+                        sequenceName: product_topic_category_id_seq
+                        startValue: 1
+                        incrementBy: 1
+                - createSequence:
+                        sequenceName: product_category_id_seq
+                        startValue: 1
+                        incrementBy: 1
+                - createTable:
+                      tableName: product_topic
+                      columns:
+                          - column:
+                                name: id
+                                type: bigint
+                                defaultValueSequenceNext: 'product_topic_id_seq'
+                                constraints:
+                                    primaryKey: true
+                                    nullable: false
+                          - column:
+                                name: uuid
+                                type: varchar(50)
+                                constraints:
+                                    nullable: false
+                          - column:
+                                name: code
+                                type: varchar(50)
+                                constraints:
+                                    nullable: false
+                                    unique: true
+                          - column:
+                                name: display_name
+                                type: varchar(500)
+                                constraints:
+                                    nullable: false
+                - createTable:
+                      tableName: product_topic_category
+                      columns:
+                          - column:
+                              name: id
+                              type: bigint
+                              defaultValueSequenceNext: 'product_topic_category_id_seq'
+                              constraints:
+                                  primaryKey: true
+                                  nullable: false
+                          - column:
+                              name: uuid
+                              type: varchar(50)
+                              constraints:
+                                  nullable: false
+                          - column:
+                                name: product_topic_id
+                                type: bigint
+                                constraints:
+                                    nullable: false
+                                    foreignKeyName: product_topic_product_topic_category_fk
+                                    references: product_topic(id)
+                          - column:
+                                name: code
+                                type: varchar(50)
+                                constraints:
+                                    nullable: false
+                                    unique: true
+                          - column:
+                                name: display_name
+                                type: varchar(500)
+                                constraints:
+                                    nullable: false
+                - createTable:
+                      tableName: product_category
+                      columns:
+                          - column:
+                                name: id
+                                type: bigint
+                                defaultValueSequenceNext: 'product_category_id_seq'
+                                constraints:
+                                    primaryKey: true
+                                    nullable: false
+                          - column:
+                                name: uuid
+                                type: varchar(50)
+                                constraints:
+                                    nullable: false
+                          - column:
+                                name: topic_category_id
+                                type: bigint
+                                constraints:
+                                    nullable: false
+                                    foreignKeyName: topic_category_product_category_fk
+                                    references: product_topic_category(id)
+                          - column:
+                                name: code
+                                type: varchar(50)
+                                constraints:
+                                    nullable: false
+                                    unique: true
+                          - column:
+                                name: display_name
+                                type: varchar(500)
+                                constraints:
+                                    nullable: false
