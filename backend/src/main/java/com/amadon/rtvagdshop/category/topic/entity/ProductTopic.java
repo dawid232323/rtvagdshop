@@ -3,7 +3,6 @@ package com.amadon.rtvagdshop.category.topic.entity;
 import com.amadon.rtvagdshop.category.entity.Category;
 import jakarta.persistence.*;
 import lombok.*;
-import org.hibernate.annotations.ColumnDefault;
 
 import java.util.List;
 import java.util.UUID;

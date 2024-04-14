@@ -22,7 +22,6 @@ public class ProductTopicCategory implements Category
 
     @Column( name = "uuid" )
     @Setter( AccessLevel.NONE )
-    @GeneratedValue( strategy = GenerationType.UUID )
     private String uuid = UUID.randomUUID().toString();
 
     @Column( name = "code", length = 50, nullable = false, unique = true )
