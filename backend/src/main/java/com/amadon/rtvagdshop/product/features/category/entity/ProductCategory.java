@@ -1,11 +1,12 @@
-package com.amadon.rtvagdshop.product.entity;
+package com.amadon.rtvagdshop.product.features.category.entity;
 
 import com.amadon.rtvagdshop.category.entity.Category;
 import com.amadon.rtvagdshop.category.topic.entity.ProductTopicCategory;
+import com.amadon.rtvagdshop.product.entity.Product;
 import jakarta.persistence.*;
 import lombok.*;
-import org.hibernate.annotations.ColumnDefault;
 
+import java.util.List;
 import java.util.UUID;
 
 @Getter
@@ -36,5 +37,8 @@ public class ProductCategory implements Category
 
     @Column( name = "display_name", nullable = false, length = 500 )
     private String displayName;
+
+    @ManyToMany( mappedBy = "categories", fetch = FetchType.LAZY )
+    private List< Product > products;
 
 }

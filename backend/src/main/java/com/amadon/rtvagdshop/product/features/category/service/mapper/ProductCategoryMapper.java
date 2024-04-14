@@ -1,7 +1,7 @@
-package com.amadon.rtvagdshop.product.service.mapper;
+package com.amadon.rtvagdshop.product.features.category.service.mapper;
 
-import com.amadon.rtvagdshop.product.entity.ProductCategory;
-import com.amadon.rtvagdshop.product.service.dto.ProductCategoryDto;
+import com.amadon.rtvagdshop.product.features.category.entity.ProductCategory;
+import com.amadon.rtvagdshop.product.features.category.service.dto.ProductCategoryDto;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.NullValueCheckStrategy;

@@ -17,7 +17,7 @@ public class ProductTopic implements Category
     @Id
     @Setter( AccessLevel.NONE )
     @GeneratedValue( strategy = GenerationType.SEQUENCE, generator = "id_generator" )
-    @SequenceGenerator( name = "id_generator", sequenceName = "product_topic_id_seq" )
+    @SequenceGenerator( name = "id_generator", sequenceName = "product_topic_id_seq", allocationSize = 1 )
     @Column( name = "id" )
     private Long id;
 

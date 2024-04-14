@@ -1,0 +1,52 @@
+databaseChangeLog:
+    - changeSet:
+          id: 0.0.2
+          author: dawid232323
+          changes:
+              -   createSequence:
+                      sequenceName: products_id_seq
+                      startValue: 1
+                      incrementBy: 1
+              - createTable:
+                    tableName: products
+                    columns:
+                        - column:
+                            name: id
+                            type: bigint
+                            defaultValueSequenceNext: products_id_seq
+                            constraints:
+                                primaryKey: true
+                                nullable: false
+                        - column:
+                            name: uuid
+                            type: varchar(50)
+                            constraints:
+                                nullable: false
+                        - column:
+                              name: display_name
+                              type: varchar(500)
+                              constraints:
+                                  nullable: false
+                        - column:
+                              name: base_price
+                              type: bigint
+                              remarks: Value presented in euro cents
+                              constraints:
+                                  nullable: false
+              - createTable:
+                    tableName: products_products_categories
+                    columns:
+                        - column:
+                              name: product_id
+                              type: bigint
+                              constraints:
+                                  nullable: false
+                                  foreignKeyName: products_categories_product_fk
+                                  references: products(id)
+                        - column:
+                              name: product_category_id
+                              type: bigint
+                              constraints:
+                                  nullable: false
+                                  foreignKeyName: products_categories_product_category_fk
+                                  references: product_category(id)

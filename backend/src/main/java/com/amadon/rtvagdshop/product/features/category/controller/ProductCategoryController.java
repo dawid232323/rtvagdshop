@@ -1,7 +1,7 @@
-package com.amadon.rtvagdshop.product.controller;
+package com.amadon.rtvagdshop.product.features.category.controller;
 
-import com.amadon.rtvagdshop.product.service.ProductCategoryService;
-import com.amadon.rtvagdshop.product.service.dto.ProductCategoryDto;
+import com.amadon.rtvagdshop.product.features.category.service.ProductCategoryService;
+import com.amadon.rtvagdshop.product.features.category.service.dto.ProductCategoryDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;

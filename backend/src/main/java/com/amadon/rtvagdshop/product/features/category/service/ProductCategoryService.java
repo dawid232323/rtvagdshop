@@ -1,8 +1,8 @@
-package com.amadon.rtvagdshop.product.service;
+package com.amadon.rtvagdshop.product.features.category.service;
 
-import com.amadon.rtvagdshop.product.entity.repository.ProductCategoryRepository;
-import com.amadon.rtvagdshop.product.service.dto.ProductCategoryDto;
-import com.amadon.rtvagdshop.product.service.mapper.ProductCategoryMapper;
+import com.amadon.rtvagdshop.product.features.category.entity.repository.ProductCategoryRepository;
+import com.amadon.rtvagdshop.product.features.category.service.dto.ProductCategoryDto;
+import com.amadon.rtvagdshop.product.features.category.service.mapper.ProductCategoryMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

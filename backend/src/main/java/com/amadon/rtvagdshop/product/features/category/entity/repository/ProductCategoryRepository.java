@@ -1,6 +1,6 @@
-package com.amadon.rtvagdshop.product.entity.repository;
+package com.amadon.rtvagdshop.product.features.category.entity.repository;
 
-import com.amadon.rtvagdshop.product.entity.ProductCategory;
+import com.amadon.rtvagdshop.product.features.category.entity.ProductCategory;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 

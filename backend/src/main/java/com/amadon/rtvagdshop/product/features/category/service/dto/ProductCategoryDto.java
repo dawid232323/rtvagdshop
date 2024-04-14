@@ -1,4 +1,4 @@
-package com.amadon.rtvagdshop.product.service.dto;
+package com.amadon.rtvagdshop.product.features.category.service.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
