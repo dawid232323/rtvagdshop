@@ -1,6 +1,6 @@
 package com.amadon.rtvagdshop.product.features.specification.service.converter;
 
-import com.amadon.rtvagdshop.product.features.specification.entity.SpecificationValueType;
+import com.amadon.rtvagdshop.product.features.specification.features.valueType.entity.SpecificationValueType;
 import jakarta.persistence.AttributeConverter;
 import jakarta.persistence.Converter;
 

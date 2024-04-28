@@ -1,4 +1,4 @@
-package com.amadon.rtvagdshop.product.features.specification.entity;
+package com.amadon.rtvagdshop.product.features.specification.features.valueType.entity;
 
 import lombok.Getter;
 
@@ -9,9 +9,11 @@ public enum SpecificationValueType
     BOOLEAN( "boolean" ),
     LINK( "link" ),
     WEIGHT( "weight" ),
-    MULTI_DIMENSION_SIZE( "multiDimensionSize" ),
     SINGLE_DIMENSION_SIZE( "singleDimensionSize" ),
-    TIME( "time" );
+    MULTI_DIMENSION_SIZE( "multiDimensionSize" ),
+    TIME( "time" ),
+    CAPACITY( "capacity" ),
+    OTHER( "other" );
 
     private final String typeName;
 

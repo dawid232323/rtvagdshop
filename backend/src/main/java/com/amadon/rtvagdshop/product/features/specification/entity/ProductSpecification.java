@@ -1,18 +1,18 @@
 package com.amadon.rtvagdshop.product.features.specification.entity;
 
+import com.amadon.rtvagdshop.product.features.specification.features.valueType.entity.SpecificationValueType;
 import jakarta.persistence.*;
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.Setter;
-import org.apache.commons.lang3.StringUtils;
+import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 @Getter
 @Setter
 @Entity
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder( toBuilder = true )
 @Table( name = "product_specifications" )
 public class ProductSpecification
 {
@@ -26,7 +26,8 @@ public class ProductSpecification
 
     @Setter( AccessLevel.NONE )
     @Column( name = "uuid", nullable = false, length = 50 )
-    private String uuid = UUID.randomUUID().toString();
+    private String uuid = UUID.randomUUID()
+            .toString();
 
     @ManyToOne( fetch = FetchType.EAGER, optional = false )
     @JoinColumn( name = "specification_category_id", nullable = false )
@@ -59,7 +60,8 @@ public class ProductSpecification
         {
             return new ArrayList<>();
         }
-        return Arrays.stream( onlyAvailableInVariants.split( ";" ) ).toList();
+        return Arrays.stream( onlyAvailableInVariants.split( ";" ) )
+                .toList();
     }
 
     public void setOnlyAvailableInVariants( final List< String > availableInVariants )
