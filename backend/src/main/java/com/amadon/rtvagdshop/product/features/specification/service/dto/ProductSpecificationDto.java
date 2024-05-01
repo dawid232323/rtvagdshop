@@ -11,6 +11,7 @@ import java.util.List;
 @AllArgsConstructor
 public class ProductSpecificationDto<T>
 {
+    private Long id;
     private String code;
     private String displayName;
     private String type;

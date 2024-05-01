@@ -1,23 +1,22 @@
-package com.amadon.rtvagdshop.category.topic.entity;
+package com.amadon.rtvagdshop.category.features.topic.entity;
 
 import com.amadon.rtvagdshop.category.entity.Category;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.util.List;
 import java.util.UUID;
 
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Entity( name = "product_topic" )
-public class ProductTopic implements Category
+@Entity( name = "product_topic_category" )
+public class ProductTopicCategory implements Category
 {
     @Id
     @Setter( AccessLevel.NONE )
     @GeneratedValue( strategy = GenerationType.SEQUENCE, generator = "id_generator" )
-    @SequenceGenerator( name = "id_generator", sequenceName = "product_topic_id_seq", allocationSize = 1 )
+    @SequenceGenerator( name = "id_generator", sequenceName = "product_topic_category_id_seq", allocationSize = 1 )
     @Column( name = "id" )
     private Long id;
 
@@ -31,6 +30,7 @@ public class ProductTopic implements Category
     @Column( name = "display_name", length = 500, nullable = false )
     private String displayName;
 
-    @OneToMany( mappedBy = "topic" )
-    private List<ProductTopicCategory> categories;
+    @ManyToOne
+    @JoinColumn( name = "product_topic_id", nullable = false )
+    private ProductTopic topic;
 }

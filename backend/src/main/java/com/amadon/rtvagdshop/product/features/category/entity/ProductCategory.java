@@ -1,7 +1,7 @@
 package com.amadon.rtvagdshop.product.features.category.entity;
 
 import com.amadon.rtvagdshop.category.entity.Category;
-import com.amadon.rtvagdshop.category.topic.entity.ProductTopicCategory;
+import com.amadon.rtvagdshop.category.features.topic.entity.ProductTopicCategory;
 import com.amadon.rtvagdshop.product.entity.Product;
 import jakarta.persistence.*;
 import lombok.*;
