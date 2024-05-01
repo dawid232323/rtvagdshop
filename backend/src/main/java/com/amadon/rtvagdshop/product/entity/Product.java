@@ -1,6 +1,8 @@
 package com.amadon.rtvagdshop.product.entity;
 
 import com.amadon.rtvagdshop.product.features.category.entity.ProductCategory;
+import com.amadon.rtvagdshop.product.features.specification.entity.ProductSpecificationCategory;
+import com.amadon.rtvagdshop.product.features.variant.entity.ProductVariantCategory;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -41,4 +43,11 @@ public class Product
             inverseJoinColumns = { @JoinColumn( name = "product_id" ) }
     )
     List< ProductCategory > categories;
+
+    @OneToMany( mappedBy = "product" )
+    private List< ProductSpecificationCategory > specificationCategories;
+
+    @OneToMany( mappedBy = "product" )
+    private List< ProductVariantCategory > variantCategories;
+
 }

@@ -1,5 +1,6 @@
 package com.amadon.rtvagdshop.product.features.specification.entity;
 
+import com.amadon.rtvagdshop.category.entity.Category;
 import com.amadon.rtvagdshop.product.entity.Product;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
@@ -7,6 +8,7 @@ import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.ColumnDefault;
 
+import java.io.Serializable;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
@@ -16,7 +18,7 @@ import java.util.UUID;
 @Setter
 @Entity
 @Table( name = "product_specification_categories" )
-public class ProductSpecificationCategory
+public class ProductSpecificationCategory implements Category
 {
     @Id
     @Setter( AccessLevel.NONE )
@@ -28,7 +30,8 @@ public class ProductSpecificationCategory
 
     @Setter( AccessLevel.NONE )
     @Column( name = "uuid", nullable = false, length = 50 )
-    private String uuid = UUID.randomUUID().toString();
+    private String uuid = UUID.randomUUID()
+            .toString();
 
     @Column( name = "name", nullable = false, length = 500 )
     private String name;
@@ -40,4 +43,15 @@ public class ProductSpecificationCategory
     @OneToMany( mappedBy = "specificationCategory" )
     private List< ProductSpecification > productSpecifications;
 
+    @Override
+    public String getCode()
+    {
+        return null;
+    }
+
+    @Override
+    public String getDisplayName()
+    {
+        return getName();
+    }
 }
