@@ -1,0 +1,190 @@
+databaseChangeLog:
+    -   changeSet:
+            id: 0.0.6
+            author: dawid232323
+            changes:
+                -   createSequence:
+                        sequenceName: orders_id_seq
+                        startValue: 1
+                        incrementBy: 1
+                -   createSequence:
+                        sequenceName: order_product_information_id_seq
+                        startValue: 1
+                        incrementBy: 1
+                -   createSequence:
+                        sequenceName: product_info_selected_variants_id_seq
+                        startValue: 1
+                        incrementBy: 1
+                -   createSequence:
+                        sequenceName: order_buyer_information_id_seq
+                        startValue: 1
+                        incrementBy: 1
+                -   createTable:
+                        tableName: orders
+                        columns:
+                            -   column:
+                                    name: id
+                                    type: bigint
+                                    defaultValueSequenceNext: orders_id_seq
+                                    constraints:
+                                        primaryKey: true
+                            -   column:
+                                    name: uuid
+                                    type: varchar(50)
+                                    constraints:
+                                        nullable: false
+                            -   column:
+                                    name: created_at
+                                    type: datetime
+                                    constraints:
+                                        nullable: false
+                            -   column:
+                                    name: updated_at
+                                    type: datetime
+                -   createTable:
+                        tableName: order_buyer_information
+                        columns:
+                            -   column:
+                                    name: id
+                                    type: bigint
+                                    defaultValueSequenceNext: order_buyer_information_id_seq
+                                    constraints:
+                                        primaryKey: true
+                            -   column:
+                                    name: uuid
+                                    type: varchar(50)
+                                    constraints:
+                                        nullable: false
+                            -   column:
+                                    name: order_id
+                                    type: bigint
+                                    constraints:
+                                        foreignKeyName: order_buyer_information_orders_fk
+                                        references: orders(id)
+                            -   column:
+                                    name: shipping_address_id
+                                    type: bigint
+                                    constraints:
+                                        foreignKeyName: order_buyer_information_addresses_fk
+                                        references: addresses(id)
+                            -   column:
+                                    name: correspondence_address_id
+                                    type: bigint
+                                    constraints:
+                                        foreignKeyName: order_buyer_information_correspondence_addresses_fk
+                                        references: addresses(id)
+                            -   column:
+                                    name: first_name
+                                    type: varchar(400)
+                            -   column:
+                                    name: last_name
+                                    type: varchar(400)
+                            -   column:
+                                    name: email
+                                    type: varchar(100)
+                            -   column:
+                                    name: phone_number
+                                    type: varchar(100)
+                            -   column:
+                                    name: is_invoice_required
+                                    type: boolean
+                                    defaultValueBoolean: false
+                            -   column:
+                                    name: nip
+                                    type: varchar(50)
+                            -   column:
+                                    name: regon
+                                    type: varchar(50)
+                            -   column:
+                                    name: company_name
+                                    type: varchar(500)
+                -   createTable:
+                        tableName: order_product_information
+                        columns:
+                            -   column:
+                                    name: id
+                                    type: bigint
+                                    defaultValueSequenceNext: order_product_information_id_seq
+                                    constraints:
+                                        primaryKey: true
+                            -   column:
+                                    name: uuid
+                                    type: varchar(50)
+                                    constraints:
+                                        nullable: false
+                            -   column:
+                                    name: order_id
+                                    type: bigint
+                                    constraints:
+                                        foreignKeyName: order_product_information_orders_fk
+                                        references: orders(id)
+                            -   column:
+                                    name: product_id
+                                    type: bigint
+                                    constraints:
+                                        nullable: false
+                            -   column:
+                                    name: product_name
+                                    type: varchar(500)
+                                    constraints:
+                                        nullable: false
+                            -   column:
+                                    name: base_price
+                                    type: double
+                                    constraints:
+                                        nullable: false
+                            -   column:
+                                    name: order_code
+                                    type: varchar(300)
+                                    constraints:
+                                        nullable: false
+                -   createTable:
+                        tableName: product_info_selected_variants
+                        columns:
+                            -   column:
+                                    name: id
+                                    type: bigint
+                                    defaultValueSequenceNext: product_info_selected_variants_id_seq
+                                    constraints:
+                                        primaryKey: true
+                            -   column:
+                                    name: uuid
+                                    type: varchar(50)
+                                    constraints:
+                                        nullable: false
+                            -   column:
+                                    name: product_info_id
+                                    type: bigint
+                                    constraints:
+                                        foreignKeyName: product_info_selected_variants_order_product_information_fk
+                                        references: order_product_information(id)
+                            -   column:
+                                    name: variant_category_id
+                                    type: bigint
+                                    constraints:
+                                        nullable: false
+                            -   column:
+                                    name: variant_category_name
+                                    type: varchar(500)
+                                    constraints:
+                                        nullable: false
+                            -   column:
+                                    name: variant_id
+                                    type: bigint
+                                    constraints:
+                                        nullable: false
+                            -   column:
+                                    name: variant_code
+                                    type: varchar(500)
+                                    constraints:
+                                        nullable: false
+                            -   column:
+                                    name: variant_value
+                                    type: varchar(500)
+                                    constraints:
+                                        nullable: false
+                            -   column:
+                                    name: additional_price
+                                    type: double
+                                    constraints:
+                                        nullable: false
