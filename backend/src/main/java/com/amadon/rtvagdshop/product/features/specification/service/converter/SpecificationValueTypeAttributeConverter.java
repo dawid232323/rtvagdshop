@@ -4,6 +4,7 @@ import com.amadon.rtvagdshop.product.features.specification.features.valueType.e
 import jakarta.persistence.AttributeConverter;
 import jakarta.persistence.Converter;
 
+import java.util.Arrays;
 import java.util.Objects;
 
 @Converter( autoApply = true )
@@ -22,6 +23,10 @@ public class SpecificationValueTypeAttributeConverter implements AttributeConver
     @Override
     public SpecificationValueType convertToEntityAttribute( final String aS )
     {
-        return SpecificationValueType.valueOf( aS );
+        return Arrays.stream( SpecificationValueType.values() )
+                .filter( value -> value.getTypeName()
+                        .equalsIgnoreCase( aS ) )
+                .findFirst()
+                .orElseThrow( IllegalArgumentException::new );
     }
 }
