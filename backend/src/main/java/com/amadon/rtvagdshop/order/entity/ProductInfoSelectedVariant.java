@@ -1,13 +1,17 @@
 package com.amadon.rtvagdshop.order.entity;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
+
+import java.util.UUID;
 
 @Getter
 @Setter
 @Entity
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @Table( name = "product_info_selected_variants" )
 public class ProductInfoSelectedVariant
 {
@@ -19,7 +23,8 @@ public class ProductInfoSelectedVariant
     private Long id;
 
     @Column( name = "uuid", nullable = false, length = 50 )
-    private String uuid;
+    private String uuid = UUID.randomUUID()
+            .toString();
 
     @ManyToOne( fetch = FetchType.EAGER )
     @JoinColumn( name = "product_info_id" )

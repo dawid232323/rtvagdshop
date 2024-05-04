@@ -4,10 +4,16 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.ColumnDefault;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.Instant;
 import java.util.LinkedHashSet;
 import java.util.Set;
+import java.util.UUID;
 
 @Getter
 @Setter
@@ -18,23 +24,24 @@ public class Order
     @Id
     @GeneratedValue( strategy = GenerationType.SEQUENCE, generator = "orders_id_gen" )
     @SequenceGenerator( name = "orders_id_gen", sequenceName = "orders_id_seq", allocationSize = 1 )
-    @ColumnDefault( "nextval('orders_id_seq'" )
     @Column( name = "id", nullable = false )
     private Long id;
 
     @Column( name = "uuid", nullable = false, length = 50 )
-    private String uuid;
+    private String uuid = UUID.randomUUID().toString();
 
-    @Column( name = "created_at", nullable = false )
+    @CreationTimestamp
+    @Column( name = "created_at" )
     private Instant createdAt;
 
+    @UpdateTimestamp
     @Column( name = "updated_at" )
     private Instant updatedAt;
 
-    @OneToOne( mappedBy = "order" )
+    @OneToOne( mappedBy = "order", cascade = { CascadeType.MERGE, CascadeType.PERSIST } )
     private OrderBuyerInformation orderBuyerInformation;
 
-    @OneToOne( mappedBy = "order" )
+    @OneToOne( mappedBy = "order", cascade = { CascadeType.MERGE, CascadeType.PERSIST } )
     private OrderProductInformation orderProductInformation;
 
 }

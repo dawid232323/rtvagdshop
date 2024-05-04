@@ -6,6 +6,8 @@ import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.ColumnDefault;
 
+import java.util.UUID;
+
 @Getter
 @Setter
 @Entity
@@ -20,17 +22,17 @@ public class OrderBuyerInformation
     private Long id;
 
     @Column( name = "uuid", nullable = false, length = 50 )
-    private String uuid;
+    private String uuid = UUID.randomUUID().toString();
 
     @OneToOne( fetch = FetchType.EAGER )
     @JoinColumn( name = "order_id" )
     private Order order;
 
-    @ManyToOne( fetch = FetchType.EAGER )
+    @ManyToOne( fetch = FetchType.EAGER, cascade = { CascadeType.MERGE, CascadeType.PERSIST } )
     @JoinColumn( name = "shipping_address_id" )
     private Address shippingAddress;
 
-    @ManyToOne( fetch = FetchType.EAGER )
+    @ManyToOne( fetch = FetchType.EAGER, cascade = { CascadeType.MERGE, CascadeType.PERSIST } )
     @JoinColumn( name = "correspondence_address_id" )
     private Address correspondenceAddress;
 

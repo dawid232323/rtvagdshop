@@ -1,18 +1,17 @@
 package com.amadon.rtvagdshop.order.entity;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
 
-import java.util.ArrayList;
-import java.util.LinkedHashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @Getter
 @Setter
 @Entity
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @Table( name = "order_product_information" )
 public class OrderProductInformation
 {
@@ -24,8 +23,9 @@ public class OrderProductInformation
     @Column( name = "id", nullable = false )
     private Long id;
 
+    @Builder.Default
     @Column( name = "uuid", nullable = false, length = 50 )
-    private String uuid;
+    private String uuid = UUID.randomUUID().toString();
 
     @OneToOne( fetch = FetchType.EAGER )
     @JoinColumn( name = "order_id" )
@@ -43,7 +43,7 @@ public class OrderProductInformation
     @Column( name = "order_code", nullable = false, length = 300 )
     private String orderCode;
 
-    @OneToMany( mappedBy = "productInfo" )
+    @OneToMany( mappedBy = "productInfo", cascade = { CascadeType.MERGE, CascadeType.PERSIST } )
     private List< ProductInfoSelectedVariant > productInfoSelectedVariants = new ArrayList<>();
 
 }
