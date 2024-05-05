@@ -15,6 +15,7 @@ public interface OrderBuyerInformationMapper
     OrderBuyerInformationDto toDto( OrderBuyerInformation orderBuyerInformation );
 
     @BeanMapping( nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE )
-    OrderBuyerInformation partialUpdate( OrderBuyerInformationDto orderBuyerInformationDto,
+    @Mapping( target = "id", ignore = true )
+    void partialUpdate( OrderBuyerInformationDto orderBuyerInformationDto,
                                          @MappingTarget OrderBuyerInformation orderBuyerInformation );
 }

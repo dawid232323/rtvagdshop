@@ -27,7 +27,7 @@ public class OrderProductInformation
     @Column( name = "uuid", nullable = false, length = 50 )
     private String uuid = UUID.randomUUID().toString();
 
-    @OneToOne( fetch = FetchType.EAGER )
+    @OneToOne( fetch = FetchType.EAGER, cascade = CascadeType.ALL )
     @JoinColumn( name = "order_id" )
     private Order order;
 
@@ -43,7 +43,7 @@ public class OrderProductInformation
     @Column( name = "order_code", nullable = false, length = 300 )
     private String orderCode;
 
-    @OneToMany( mappedBy = "productInfo", cascade = { CascadeType.MERGE, CascadeType.PERSIST } )
+    @OneToMany( mappedBy = "productInfo", cascade = CascadeType.ALL )
     private List< ProductInfoSelectedVariant > productInfoSelectedVariants = new ArrayList<>();
 
 }

@@ -7,15 +7,23 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.time.Instant;
+import java.util.Map;
+import java.util.UUID;
+
 @Getter
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
 public class ErrorResponse
 {
-    private String uuid;
+    @Builder.Default
+    private String uuid = UUID.randomUUID().toString();
+    @Builder.Default
+    private Instant timestamp = Instant.now();
     private DomainArea area;
     private ReasonCode reasonCode;
     private int requestStatus;
     private String message;
+    private Map<String, String> errorDetails;
 }

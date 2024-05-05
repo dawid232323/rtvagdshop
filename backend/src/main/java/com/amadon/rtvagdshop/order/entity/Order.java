@@ -38,10 +38,10 @@ public class Order
     @Column( name = "updated_at" )
     private Instant updatedAt;
 
-    @OneToOne( mappedBy = "order", cascade = { CascadeType.MERGE, CascadeType.PERSIST } )
+    @OneToOne( mappedBy = "order", cascade = CascadeType.ALL )
     private OrderBuyerInformation orderBuyerInformation;
 
-    @OneToOne( mappedBy = "order", cascade = { CascadeType.MERGE, CascadeType.PERSIST } )
+    @OneToOne( mappedBy = "order", cascade = CascadeType.ALL )
     private OrderProductInformation orderProductInformation;
 
 }

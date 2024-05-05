@@ -15,7 +15,6 @@ import com.amadon.rtvagdshop.product.features.variant.entity.ProductVariantDetai
 import com.amadon.rtvagdshop.product.service.ProductService;
 import lombok.RequiredArgsConstructor;
 
-import java.time.Instant;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -31,10 +30,12 @@ public abstract class AbstractOrderCreateStrategy implements OrderCreateStrategy
     public Order create( final OrderCreateDto aCreateDto )
     {
         final Order order = new Order();
-        order.setOrderBuyerInformation( fillBuyerInformation() );
-        order.setOrderProductInformation( fillProductInfo( aCreateDto ) );
-//        order.setCreatedAt( Instant.now() );
-//        order.setUpdatedAt( Instant.now() );
+        final OrderBuyerInformation buyerInformation = fillBuyerInformation();
+        final OrderProductInformation productInformation = fillProductInfo( aCreateDto );
+        order.setOrderBuyerInformation( buyerInformation );
+        order.setOrderProductInformation( productInformation );
+        buyerInformation.setOrder( order );
+        productInformation.setOrder( order );
         return order;
     }
 
@@ -53,19 +54,22 @@ public abstract class AbstractOrderCreateStrategy implements OrderCreateStrategy
     protected OrderProductInformation fillProductInfo( final OrderCreateDto aCreateDto )
     {
         final Product product = productService.getProduct( aCreateDto.getProductId() );
-        final List< ProductInfoSelectedVariant > selectedVariants = fillSelectedVariants( product, aCreateDto.getSelectedVariants() );
+        final List< ProductInfoSelectedVariant > selectedVariants = fillSelectedVariants( product,
+                aCreateDto.getSelectedVariants() );
         final String orderCode = getOrderCode( product, selectedVariants );
-        return OrderProductInformation.builder()
+        final OrderProductInformation productInformation = OrderProductInformation.builder()
                 .productId( aCreateDto.getProductId() )
                 .productName( product.getDisplayName() )
                 .basePrice( Double.valueOf( product.getBasePrice() ) )
                 .productInfoSelectedVariants( selectedVariants )
                 .orderCode( orderCode )
                 .build();
+        selectedVariants.forEach( variant -> variant.setProductInfo( productInformation ) );
+        return productInformation;
     }
 
     protected List< ProductInfoSelectedVariant > fillSelectedVariants( final Product aProduct,
-                                                               final List< OrderCreateSelectedVariantDto > aProductInfoSelectedVariants )
+                                                                       final List< OrderCreateSelectedVariantDto > aProductInfoSelectedVariants )
     {
         final Map< Long, Long > selectedVariantsMap = getSelectedVariantsMap( aProductInfoSelectedVariants );
         return aProduct.getVariantCategories()

@@ -26,7 +26,7 @@ public class ProductInfoSelectedVariant
     private String uuid = UUID.randomUUID()
             .toString();
 
-    @ManyToOne( fetch = FetchType.EAGER )
+    @ManyToOne( fetch = FetchType.EAGER, cascade = CascadeType.ALL )
     @JoinColumn( name = "product_info_id" )
     private OrderProductInformation productInfo;
 

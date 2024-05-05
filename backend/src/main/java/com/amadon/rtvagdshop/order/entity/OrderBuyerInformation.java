@@ -24,15 +24,15 @@ public class OrderBuyerInformation
     @Column( name = "uuid", nullable = false, length = 50 )
     private String uuid = UUID.randomUUID().toString();
 
-    @OneToOne( fetch = FetchType.EAGER )
+    @OneToOne( fetch = FetchType.EAGER, cascade = CascadeType.ALL )
     @JoinColumn( name = "order_id" )
     private Order order;
 
-    @ManyToOne( fetch = FetchType.EAGER, cascade = { CascadeType.MERGE, CascadeType.PERSIST } )
+    @ManyToOne( fetch = FetchType.EAGER, cascade = CascadeType.ALL )
     @JoinColumn( name = "shipping_address_id" )
     private Address shippingAddress;
 
-    @ManyToOne( fetch = FetchType.EAGER, cascade = { CascadeType.MERGE, CascadeType.PERSIST } )
+    @ManyToOne( fetch = FetchType.EAGER, cascade = CascadeType.ALL )
     @JoinColumn( name = "correspondence_address_id" )
     private Address correspondenceAddress;
 
