@@ -12,7 +12,7 @@ public class LinkValueTypeConverter implements SpecificationValueTypeConvertStra
 {
     private final String hostProtocol;
 
-    public LinkValueTypeConverter( @Value( "shop.host.protocol" ) final String aHostProtocol )
+    public LinkValueTypeConverter( @Value( "${shop.host.protocol}" ) final String aHostProtocol )
     {
         this.hostProtocol = aHostProtocol;
     }

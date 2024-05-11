@@ -9,8 +9,21 @@ services:
             - rtvAgdStore-db:/var/lib/postgresql/data
         ports:
             - '5432:5432'
+    fileStorage:
+        image: minio/minio
+        restart: always
+        ports:
+            - '9000:9000'
+            - '9001:9001'
+        networks:
+            - rtvAgdStore-network
+        volumes:
+            -   minio-storage:/data
+        env_file: './.env'
+        command: server --console-address ":9001" /data
 volumes:
     rtvAgdStore-db:
+    minio-storage:
 networks:
     rtvAgdStore-network:
         driver: bridge
