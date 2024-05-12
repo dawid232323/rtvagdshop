@@ -1,6 +1,7 @@
 package com.amadon.rtvagdshop.product.entity;
 
 import com.amadon.rtvagdshop.product.features.category.entity.ProductCategory;
+import com.amadon.rtvagdshop.product.features.description.entity.ProductDescription;
 import com.amadon.rtvagdshop.product.features.specification.entity.ProductSpecificationCategory;
 import com.amadon.rtvagdshop.product.features.variant.entity.ProductVariantCategory;
 import jakarta.persistence.*;
@@ -49,5 +50,8 @@ public class Product
 
     @OneToMany( mappedBy = "product" )
     private List< ProductVariantCategory > variantCategories;
+
+    @OneToOne( mappedBy = "product" )
+    private ProductDescription description;
 
 }

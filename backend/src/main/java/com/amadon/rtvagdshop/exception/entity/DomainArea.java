@@ -2,5 +2,8 @@ package com.amadon.rtvagdshop.exception.entity;
 
 public enum DomainArea
 {
-    PRODUCT, ORDER, GLOBAL
+    PRODUCT,
+    PRODUCT_DESCRIPTION,
+    ORDER,
+    GLOBAL
 }
