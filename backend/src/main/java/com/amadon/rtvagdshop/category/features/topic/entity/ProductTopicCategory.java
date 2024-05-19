@@ -3,6 +3,7 @@ package com.amadon.rtvagdshop.category.features.topic.entity;
 import com.amadon.rtvagdshop.category.entity.Category;
 import jakarta.persistence.*;
 import lombok.*;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.UUID;
 
@@ -30,7 +31,14 @@ public class ProductTopicCategory implements Category
     @Column( name = "display_name", length = 500, nullable = false )
     private String displayName;
 
-    @ManyToOne
+    @ManyToOne( fetch = FetchType.EAGER )
     @JoinColumn( name = "product_topic_id", nullable = false )
     private ProductTopic topic;
+
+    @Nullable
+    @Override
+    public Category getParent()
+    {
+        return topic;
+    }
 }

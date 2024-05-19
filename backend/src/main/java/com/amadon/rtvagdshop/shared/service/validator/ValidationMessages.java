@@ -18,4 +18,8 @@ public final class ValidationMessages
         public static final String emailRequired = "Please provide email address";
         public static final String invalidEmail = "Please provide valid email address";
     }
+
+    public static class PrimaryKey {
+        public static final String validValue = "Please provide valid number starting from one";
+    }
 }

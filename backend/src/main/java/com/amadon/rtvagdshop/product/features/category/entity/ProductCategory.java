@@ -5,6 +5,7 @@ import com.amadon.rtvagdshop.category.features.topic.entity.ProductTopicCategory
 import com.amadon.rtvagdshop.product.entity.Product;
 import jakarta.persistence.*;
 import lombok.*;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 import java.util.UUID;
@@ -28,7 +29,7 @@ public class ProductCategory implements Category
     @Column( name = "uuid", nullable = false, length = 50 )
     private String uuid = UUID.randomUUID().toString();
 
-    @ManyToOne( fetch = FetchType.LAZY, optional = false )
+    @ManyToOne( fetch = FetchType.EAGER, optional = false )
     @JoinColumn( name = "topic_category_id", nullable = false )
     private ProductTopicCategory topicCategory;
 
@@ -41,4 +42,10 @@ public class ProductCategory implements Category
     @ManyToMany( mappedBy = "categories", fetch = FetchType.LAZY )
     private List< Product > products;
 
+    @Nullable
+    @Override
+    public Category getParent()
+    {
+        return topicCategory;
+    }
 }

@@ -2,11 +2,13 @@ package com.amadon.rtvagdshop.product.controller;
 
 import com.amadon.rtvagdshop.product.service.ProductService;
 import com.amadon.rtvagdshop.product.service.dto.ProductDto;
+import com.amadon.rtvagdshop.product.service.dto.ProductSearchQueryDto;
+import com.amadon.rtvagdshop.product.service.dto.ProductSearchResultDto;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.web.bind.annotation.*;
 
 @RequiredArgsConstructor
 @RestController
@@ -19,5 +21,12 @@ public class ProductController
     public ProductDto getProductById( @PathVariable( "productId" ) final Long productId )
     {
         return productService.getProductDtoById( productId );
+    }
+
+    @GetMapping
+    public Page< ProductSearchResultDto > getProductEntries( @Valid @ModelAttribute final ProductSearchQueryDto aSearchQueryDto,
+                                                             final Pageable aPageable )
+    {
+        return productService.searchForProducts( aSearchQueryDto, aPageable );
     }
 }

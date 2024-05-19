@@ -3,6 +3,7 @@ package com.amadon.rtvagdshop.category.features.topic.entity;
 import com.amadon.rtvagdshop.category.entity.Category;
 import jakarta.persistence.*;
 import lombok.*;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 import java.util.UUID;
@@ -33,4 +34,17 @@ public class ProductTopic implements Category
 
     @OneToMany( mappedBy = "topic" )
     private List<ProductTopicCategory> categories;
+
+    @Override
+    public boolean hasParent()
+    {
+        return false;
+    }
+
+    @Nullable
+    @Override
+    public Category getParent()
+    {
+        return null;
+    }
 }

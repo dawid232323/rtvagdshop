@@ -7,6 +7,7 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.ColumnDefault;
+import org.jetbrains.annotations.Nullable;
 
 import java.io.Serializable;
 import java.util.LinkedHashSet;
@@ -53,5 +54,18 @@ public class ProductSpecificationCategory implements Category
     public String getDisplayName()
     {
         return getName();
+    }
+
+    @Override
+    public boolean hasParent()
+    {
+        return false;
+    }
+
+    @Nullable
+    @Override
+    public Category getParent()
+    {
+        return null;
     }
 }
