@@ -2,10 +2,9 @@ package com.amadon.rtvagdshop.product.service;
 
 import com.amadon.rtvagdshop.category.entity.Category;
 import com.amadon.rtvagdshop.product.entity.Product;
-import com.amadon.rtvagdshop.product.service.dto.CategoryPathDto;
-import com.amadon.rtvagdshop.product.service.dto.ProductDto;
-import com.amadon.rtvagdshop.product.service.dto.ProductSearchQueryDto;
-import com.amadon.rtvagdshop.product.service.dto.ProductSearchResultDto;
+import com.amadon.rtvagdshop.product.service.creator.ProductCreatorStrategy;
+import com.amadon.rtvagdshop.product.service.dto.*;
+import com.amadon.rtvagdshop.product.service.exception.LackOfCreateStrategyException;
 import com.amadon.rtvagdshop.product.service.exception.ProductNotFoundException;
 import com.amadon.rtvagdshop.product.service.mapper.ProductMapper;
 import com.amadon.rtvagdshop.product.service.repository.ProductRepository;
@@ -27,6 +26,8 @@ public class ProductService
     private final ProductPersistenceService persistenceService;
     private final CategoryPathBuilder categoryPathBuilder;
 
+    private final List< ProductCreatorStrategy > creatorStrategies;
+
     public ProductDto getProductDtoById( final Long aProductId )
     {
         return productMapper.mapToDto( persistenceService.getProduct( aProductId ) );
@@ -35,6 +36,13 @@ public class ProductService
     public Product getProduct( final Long aProductId )
     {
         return persistenceService.getProduct( aProductId );
+    }
+
+    public ProductDto initProduct( final InitProductDto aInitProductDto )
+    {
+        final ProductCreatorStrategy strategy = resolveCreateStrategy();
+        final Product createdProduct = strategy.createProduct( aInitProductDto );
+        return productMapper.mapToDto( persistenceService.saveProduct( createdProduct ) );
     }
 
     public Page< ProductSearchResultDto > searchForProducts( final ProductSearchQueryDto aSearchQueryDto,
@@ -60,5 +68,13 @@ public class ProductService
             mappedResult.setCategoryPaths( categoryPaths );
             return mappedResult;
         } );
+    }
+
+    private ProductCreatorStrategy resolveCreateStrategy()
+    {
+        return creatorStrategies.stream()
+                .filter( ProductCreatorStrategy::isApplicable )
+                .findFirst()
+                .orElseThrow( LackOfCreateStrategyException::new );
     }
 }

@@ -1,5 +1,6 @@
 package com.amadon.rtvagdshop.product.features.category.service;
 
+import com.amadon.rtvagdshop.product.features.category.entity.ProductCategory;
 import com.amadon.rtvagdshop.product.features.category.entity.repository.ProductCategoryRepository;
 import com.amadon.rtvagdshop.product.features.category.service.dto.ProductCategoryDto;
 import com.amadon.rtvagdshop.product.features.category.service.mapper.ProductCategoryMapper;
@@ -23,5 +24,10 @@ public class ProductCategoryService
                 .stream()
                 .map( productCategoryMapper::mapToDto )
                 .collect( Collectors.toList() );
+    }
+
+    public List< ProductCategory > getProductCategoriesByIds( final List< Long > aCategoryIds )
+    {
+        return productCategoryRepository.findAllByIdIn( aCategoryIds );
     }
 }

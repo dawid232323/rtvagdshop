@@ -1,6 +1,7 @@
 package com.amadon.rtvagdshop.product.controller;
 
 import com.amadon.rtvagdshop.product.service.ProductService;
+import com.amadon.rtvagdshop.product.service.dto.InitProductDto;
 import com.amadon.rtvagdshop.product.service.dto.ProductDto;
 import com.amadon.rtvagdshop.product.service.dto.ProductSearchQueryDto;
 import com.amadon.rtvagdshop.product.service.dto.ProductSearchResultDto;
@@ -8,6 +9,7 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 @RequiredArgsConstructor
@@ -28,5 +30,12 @@ public class ProductController
                                                              final Pageable aPageable )
     {
         return productService.searchForProducts( aSearchQueryDto, aPageable );
+    }
+
+    @PostMapping
+    @ResponseStatus( HttpStatus.CREATED )
+    public ProductDto initProduct( @Valid @RequestBody final InitProductDto aInitProductDto )
+    {
+        return productService.initProduct( aInitProductDto );
     }
 }

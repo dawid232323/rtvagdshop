@@ -39,5 +39,11 @@ class ProductPersistenceService
         final Specification< Product > specification = specificationProvider.getSpecification( aSearchQueryDto );
         return productRepository.findAll( specification);
     }
+
+    public Product saveProduct( final Product aProduct )
+    {
+        productRepository.save( aProduct );
+        return aProduct;
+    }
 }
 

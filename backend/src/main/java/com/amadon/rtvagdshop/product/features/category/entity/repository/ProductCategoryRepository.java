@@ -14,4 +14,6 @@ public interface ProductCategoryRepository extends JpaRepository< ProductCategor
             "order by pc.topicCategory.topic.displayName, pc.topicCategory.displayName, pc.displayName"
     )
     List< ProductCategory > findAllActiveCategories();
+
+    List< ProductCategory > findAllByIdIn( List< Long > productCategoryIds );
 }
