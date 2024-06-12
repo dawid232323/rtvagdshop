@@ -1,0 +1,41 @@
+databaseChangeLog:
+    - changeSet:
+          author: dawid232323
+          id: 0.0.8
+          changes:
+              - createSequence:
+                    sequenceName: product_image_slides_id_seq
+                    startValue: 1
+                    incrementBy: 1
+              - createTable:
+                    tableName: product_image_slides
+                    columns:
+                        - column:
+                              name: id
+                              type: bigint
+                              defaultValueSequenceNext: product_image_slides_id_seq
+                              constraints:
+                                  primaryKey: true
+                        - column:
+                              name: uuid
+                              type: varchar(50)
+                              constraints:
+                                  nullable: false
+                        - column:
+                              name: product_id
+                              type: bigint
+                              constraints:
+                                  nullable: false
+                                  foreignKeyName: products_product_image_slides_fk
+                                  references: products(id)
+                        - column:
+                              name: image_path
+                              type: varchar(200)
+                              constraints:
+                                  nullable: false
+                        - column:
+                              name: is_cover
+                              type: boolean
+                              defaultValueBoolean: false
+                              constraints:
+                                  nullable: false
