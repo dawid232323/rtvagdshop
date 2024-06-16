@@ -22,4 +22,9 @@ public final class ValidationMessages
     public static class PrimaryKey {
         public static final String validValue = "Please provide valid number starting from one";
     }
+
+    public static class List {
+        public static final String emptyNotNull = "List cannot be null. " +
+                "If you don't want to put any items in the list, just provide the empty one";
+    }
 }

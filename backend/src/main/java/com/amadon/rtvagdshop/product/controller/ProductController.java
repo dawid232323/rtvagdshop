@@ -1,5 +1,6 @@
 package com.amadon.rtvagdshop.product.controller;
 
+import com.amadon.rtvagdshop.product.features.specification.service.dto.ProductSpecificationCategoryCreateDto;
 import com.amadon.rtvagdshop.product.service.ProductService;
 import com.amadon.rtvagdshop.product.service.dto.InitProductDto;
 import com.amadon.rtvagdshop.product.service.dto.ProductDto;
@@ -11,6 +12,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RequiredArgsConstructor
 @RestController
@@ -37,5 +40,13 @@ public class ProductController
     public ProductDto initProduct( @Valid @RequestBody final InitProductDto aInitProductDto )
     {
         return productService.initProduct( aInitProductDto );
+    }
+
+    @PostMapping( value = "/specifications/{productId}" )
+    @ResponseStatus( HttpStatus.CREATED )
+    public ProductDto createProductSpecifications( @Valid @RequestBody final List< ProductSpecificationCategoryCreateDto > aCreateDtos,
+                                                   @PathVariable( "productId" ) final Long aProductId )
+    {
+        return productService.createProductSpecifications( aCreateDtos, aProductId );
     }
 }

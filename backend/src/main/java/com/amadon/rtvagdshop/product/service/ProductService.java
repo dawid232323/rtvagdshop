@@ -2,6 +2,9 @@ package com.amadon.rtvagdshop.product.service;
 
 import com.amadon.rtvagdshop.category.entity.Category;
 import com.amadon.rtvagdshop.product.entity.Product;
+import com.amadon.rtvagdshop.product.features.specification.entity.ProductSpecificationCategory;
+import com.amadon.rtvagdshop.product.features.specification.service.ProductSpecificationService;
+import com.amadon.rtvagdshop.product.features.specification.service.dto.ProductSpecificationCategoryCreateDto;
 import com.amadon.rtvagdshop.product.service.creator.ProductCreatorStrategy;
 import com.amadon.rtvagdshop.product.service.dto.*;
 import com.amadon.rtvagdshop.product.service.exception.LackOfCreateStrategyException;
@@ -25,6 +28,7 @@ public class ProductService
     private final ProductMapper productMapper;
     private final ProductPersistenceService persistenceService;
     private final CategoryPathBuilder categoryPathBuilder;
+    private final ProductSpecificationService specificationService;
 
     private final List< ProductCreatorStrategy > creatorStrategies;
 
@@ -43,6 +47,17 @@ public class ProductService
         final ProductCreatorStrategy strategy = resolveCreateStrategy();
         final Product createdProduct = strategy.createProduct( aInitProductDto );
         return productMapper.mapToDto( persistenceService.saveProduct( createdProduct ) );
+    }
+
+    public ProductDto createProductSpecifications( final List< ProductSpecificationCategoryCreateDto > aCreateDtos, final Long aProductId )
+    {
+        final Product product = getProduct( aProductId );
+        final List< ProductSpecificationCategory > specificationCategories = specificationService.createSpecificationForProduct( aCreateDtos );
+
+        product.setSpecificationCategories( specificationCategories );
+        persistenceService.saveProduct( product );
+
+        return productMapper.mapToDto( product );
     }
 
     public Page< ProductSearchResultDto > searchForProducts( final ProductSearchQueryDto aSearchQueryDto,
