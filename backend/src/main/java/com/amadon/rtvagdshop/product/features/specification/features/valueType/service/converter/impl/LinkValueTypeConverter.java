@@ -3,6 +3,7 @@ package com.amadon.rtvagdshop.product.features.specification.features.valueType.
 import com.amadon.rtvagdshop.product.features.specification.entity.ProductSpecification;
 import com.amadon.rtvagdshop.product.features.specification.features.valueType.entity.SpecificationValueType;
 import com.amadon.rtvagdshop.product.features.specification.features.valueType.service.converter.SpecificationValueTypeConvertStrategy;
+import com.amadon.rtvagdshop.product.features.specification.service.ProductSpecificationIf;
 import com.amadon.rtvagdshop.product.features.specification.service.dto.ProductSpecificationDto;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -26,7 +27,7 @@ public class LinkValueTypeConverter implements SpecificationValueTypeConvertStra
     }
 
     @Override
-    public void convertFromDto( final ProductSpecificationDto< String > aSpecificationDto,
+    public void convertFromDto( final ProductSpecificationIf< String > aSpecificationDto,
                                 final ProductSpecification productSpecification )
     {
         productSpecification.setValue( aSpecificationDto.getSpecificationValue() );

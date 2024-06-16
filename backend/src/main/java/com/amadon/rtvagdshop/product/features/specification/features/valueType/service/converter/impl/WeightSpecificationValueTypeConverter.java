@@ -5,6 +5,7 @@ import com.amadon.rtvagdshop.product.features.specification.features.valueType.e
 import com.amadon.rtvagdshop.product.features.specification.features.valueType.service.converter.SpecificationValueTypeConvertStrategy;
 import com.amadon.rtvagdshop.product.features.specification.features.units.service.calculator.UnitCalculator;
 import com.amadon.rtvagdshop.product.features.specification.features.units.entity.WeightUnitsEnum;
+import com.amadon.rtvagdshop.product.features.specification.service.ProductSpecificationIf;
 import com.amadon.rtvagdshop.product.features.specification.service.dto.ProductSpecificationDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -26,7 +27,7 @@ public class WeightSpecificationValueTypeConverter implements SpecificationValue
     }
 
     @Override
-    public void convertFromDto( final ProductSpecificationDto< Double > aSpecificationDto,
+    public void convertFromDto( final ProductSpecificationIf< Double > aSpecificationDto,
                                 final ProductSpecification productSpecification )
     {
         final WeightUnitsEnum unitsEnum = WeightUnitsEnum.fromShortcut( aSpecificationDto.getUnit() );

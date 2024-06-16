@@ -5,6 +5,7 @@ import com.amadon.rtvagdshop.product.features.specification.features.units.entit
 import com.amadon.rtvagdshop.product.features.specification.features.units.service.calculator.UnitCalculator;
 import com.amadon.rtvagdshop.product.features.specification.features.valueType.entity.SpecificationValueType;
 import com.amadon.rtvagdshop.product.features.specification.features.valueType.service.converter.SpecificationValueTypeConvertStrategy;
+import com.amadon.rtvagdshop.product.features.specification.service.ProductSpecificationIf;
 import com.amadon.rtvagdshop.product.features.specification.service.dto.ProductSpecificationDto;
 import lombok.*;
 import org.apache.commons.lang3.StringUtils;
@@ -36,7 +37,7 @@ public class MultiDimensionSizeValueTypeConverter implements SpecificationValueT
     }
 
     @Override
-    public void convertFromDto( final ProductSpecificationDto< List< Double > > aSpecificationDto,
+    public void convertFromDto( final ProductSpecificationIf< List< Double > > aSpecificationDto,
                                 final ProductSpecification productSpecification )
     {
         final String finalValue = getConvertedValuesFromDto( aSpecificationDto );
@@ -71,7 +72,7 @@ public class MultiDimensionSizeValueTypeConverter implements SpecificationValueT
                 .toList();
     }
 
-    private String getConvertedValuesFromDto( final ProductSpecificationDto< List< Double > > aSpecificationDto )
+    private String getConvertedValuesFromDto( final ProductSpecificationIf< List< Double > > aSpecificationDto )
     {
         final SizeUnitsEnum currentUnit = SizeUnitsEnum.fromShortcut( aSpecificationDto.getUnit() );
         final List< String > convertedValues = aSpecificationDto.getSpecificationValue()

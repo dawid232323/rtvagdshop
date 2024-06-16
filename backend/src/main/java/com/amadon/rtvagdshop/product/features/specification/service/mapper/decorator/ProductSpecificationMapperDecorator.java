@@ -3,6 +3,8 @@ package com.amadon.rtvagdshop.product.features.specification.service.mapper.deco
 import com.amadon.rtvagdshop.product.features.specification.entity.ProductSpecification;
 import com.amadon.rtvagdshop.product.features.specification.features.valueType.entity.SpecificationValueType;
 import com.amadon.rtvagdshop.product.features.specification.features.valueType.service.converter.SpecificationValueTypeConvertStrategy;
+import com.amadon.rtvagdshop.product.features.specification.service.ProductSpecificationIf;
+import com.amadon.rtvagdshop.product.features.specification.service.dto.ProductSpecificationCreateDto;
 import com.amadon.rtvagdshop.product.features.specification.service.dto.ProductSpecificationDto;
 import com.amadon.rtvagdshop.product.features.specification.service.mapper.ProductSpecificationMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +31,19 @@ public abstract class ProductSpecificationMapperDecorator implements ProductSpec
                 resolveStrategy( productSpecification.getValueType() );
         strategy.convertFromEntity( productSpecification, productSpecificationDto );
         return productSpecificationDto;
+    }
+
+    @Override
+    public ProductSpecification mapToEntityFromCreateDto( final ProductSpecificationCreateDto aCreateDto )
+    {
+        final ProductSpecification productSpecification = mapperDelegate.mapToEntityFromCreateDto( aCreateDto );
+        final SpecificationValueTypeConvertStrategy< ? > strategy =
+                resolveStrategy( productSpecification.getValueType() );
+
+        strategy.convertFromDto( (ProductSpecificationIf)aCreateDto, productSpecification );
+        productSpecification.setOnlyAvailableInVariants( aCreateDto.getOnlyAvailableInVariants() );
+
+        return productSpecification;
     }
 
     private SpecificationValueTypeConvertStrategy< ? > resolveStrategy( final SpecificationValueType aValueType )

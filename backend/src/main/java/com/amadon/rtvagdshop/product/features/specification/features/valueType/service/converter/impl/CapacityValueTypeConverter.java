@@ -5,6 +5,7 @@ import com.amadon.rtvagdshop.product.features.specification.features.units.entit
 import com.amadon.rtvagdshop.product.features.specification.features.units.service.calculator.UnitCalculator;
 import com.amadon.rtvagdshop.product.features.specification.features.valueType.entity.SpecificationValueType;
 import com.amadon.rtvagdshop.product.features.specification.features.valueType.service.converter.SpecificationValueTypeConvertStrategy;
+import com.amadon.rtvagdshop.product.features.specification.service.ProductSpecificationIf;
 import com.amadon.rtvagdshop.product.features.specification.service.dto.ProductSpecificationDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -29,7 +30,7 @@ public class CapacityValueTypeConverter implements SpecificationValueTypeConvert
     }
 
     @Override
-    public void convertFromDto( final ProductSpecificationDto< Double > aSpecificationDto,
+    public void convertFromDto( final ProductSpecificationIf< Double > aSpecificationDto,
                                 final ProductSpecification productSpecification )
     {
 

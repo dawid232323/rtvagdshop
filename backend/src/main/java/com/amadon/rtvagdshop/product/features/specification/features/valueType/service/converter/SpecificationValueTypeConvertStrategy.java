@@ -2,6 +2,7 @@ package com.amadon.rtvagdshop.product.features.specification.features.valueType.
 
 import com.amadon.rtvagdshop.product.features.specification.entity.ProductSpecification;
 import com.amadon.rtvagdshop.product.features.specification.features.valueType.entity.SpecificationValueType;
+import com.amadon.rtvagdshop.product.features.specification.service.ProductSpecificationIf;
 import com.amadon.rtvagdshop.product.features.specification.service.dto.ProductSpecificationDto;
 
 public interface SpecificationValueTypeConvertStrategy<T>
@@ -23,7 +24,7 @@ public interface SpecificationValueTypeConvertStrategy<T>
      *
      * @param productSpecification - specification entity
      */
-    void convertFromDto( ProductSpecificationDto<T> aSpecificationDto, ProductSpecification productSpecification );
+    void convertFromDto( ProductSpecificationIf<T> aSpecificationDto, ProductSpecification productSpecification );
 
     /**
      * Determines if given converter can be used for converting value based on stored value type.
