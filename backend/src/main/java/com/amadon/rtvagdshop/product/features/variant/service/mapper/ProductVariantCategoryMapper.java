@@ -1,6 +1,7 @@
 package com.amadon.rtvagdshop.product.features.variant.service.mapper;
 
 import com.amadon.rtvagdshop.product.features.variant.entity.ProductVariantCategory;
+import com.amadon.rtvagdshop.product.features.variant.service.dto.ProductVariantCategoryCreateDto;
 import com.amadon.rtvagdshop.product.features.variant.service.dto.ProductVariantCategoryDto;
 import org.mapstruct.*;
 
@@ -15,4 +16,7 @@ public interface ProductVariantCategoryMapper
     @BeanMapping( nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE )
     ProductVariantCategory partialUpdate( ProductVariantCategoryDto productVariantCategoryDto,
                                           @MappingTarget ProductVariantCategory productVariantCategory );
+
+    @Mapping( source = "variantDetails", target = "variantDetails", ignore = true )
+    ProductVariantCategory createFromDto( ProductVariantCategoryCreateDto aCreateDto );
 }

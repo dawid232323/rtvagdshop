@@ -1,6 +1,7 @@
 package com.amadon.rtvagdshop.product.controller;
 
 import com.amadon.rtvagdshop.product.features.specification.service.dto.ProductSpecificationCategoryCreateDto;
+import com.amadon.rtvagdshop.product.features.variant.service.dto.ProductVariantCategoryCreateDto;
 import com.amadon.rtvagdshop.product.service.ProductService;
 import com.amadon.rtvagdshop.product.service.dto.InitProductDto;
 import com.amadon.rtvagdshop.product.service.dto.ProductDto;
@@ -48,5 +49,13 @@ public class ProductController
                                                    @PathVariable( "productId" ) final Long aProductId )
     {
         return productService.createProductSpecifications( aCreateDtos, aProductId );
+    }
+
+    @PostMapping( value = "/variants/{productId}" )
+    @ResponseStatus( HttpStatus.CREATED )
+    public ProductDto createProductVariants( @Valid @RequestBody final List< ProductVariantCategoryCreateDto > aCreateDtos,
+                                             @PathVariable( "productId" ) final Long aProductId )
+    {
+        return productService.createProductVariants( aCreateDtos, aProductId );
     }
 }
