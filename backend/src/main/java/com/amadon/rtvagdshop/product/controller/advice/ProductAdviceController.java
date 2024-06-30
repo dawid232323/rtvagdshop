@@ -2,6 +2,7 @@ package com.amadon.rtvagdshop.product.controller.advice;
 
 import com.amadon.rtvagdshop.exception.entity.DomainArea;
 import com.amadon.rtvagdshop.exception.entity.ReasonCode;
+import com.amadon.rtvagdshop.product.features.specification.service.validator.exception.SpecificationVariantDoesNotExistException;
 import com.amadon.rtvagdshop.product.service.exception.LackOfCreateStrategyException;
 import com.amadon.rtvagdshop.product.service.exception.ProductNotFoundException;
 import com.amadon.rtvagdshop.exception.service.dto.ErrorResponse;
@@ -45,6 +46,21 @@ public class ProductAdviceController
                 .area( DomainArea.PRODUCT )
                 .reasonCode( ReasonCode.LACK_OF_CREATE_STRATEGY )
                 .requestStatus( HttpStatus.INTERNAL_SERVER_ERROR.value() )
+                .build();
+    }
+
+    @ResponseBody
+    @ResponseStatus( HttpStatus.BAD_REQUEST )
+    @ExceptionHandler( SpecificationVariantDoesNotExistException.class )
+    public ErrorResponse handleSpecificationVariantNotFoundException( final SpecificationVariantDoesNotExistException aE )
+    {
+        log.error( "Could not find specification variant.", aE );
+        return ErrorResponse.builder()
+                .uuid( UUID.randomUUID().toString() )
+                .message( aE.getMessage() )
+                .area( DomainArea.PRODUCT_SPECIFICATION )
+                .reasonCode( ReasonCode.VALIDATION )
+                .requestStatus( HttpStatus.BAD_REQUEST.value() )
                 .build();
     }
 }

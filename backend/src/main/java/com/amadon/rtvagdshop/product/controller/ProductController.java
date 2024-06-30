@@ -43,19 +43,19 @@ public class ProductController
         return productService.initProduct( aInitProductDto );
     }
 
-    @PostMapping( value = "/specifications/{productId}" )
-    @ResponseStatus( HttpStatus.CREATED )
-    public ProductDto createProductSpecifications( @Valid @RequestBody final List< ProductSpecificationCategoryCreateDto > aCreateDtos,
-                                                   @PathVariable( "productId" ) final Long aProductId )
-    {
-        return productService.createProductSpecifications( aCreateDtos, aProductId );
-    }
-
     @PostMapping( value = "/variants/{productId}" )
     @ResponseStatus( HttpStatus.CREATED )
     public ProductDto createProductVariants( @Valid @RequestBody final List< ProductVariantCategoryCreateDto > aCreateDtos,
                                              @PathVariable( "productId" ) final Long aProductId )
     {
         return productService.createProductVariants( aCreateDtos, aProductId );
+    }
+
+    @PostMapping( value = "/specifications/{productId}" )
+    @ResponseStatus( HttpStatus.CREATED )
+    public ProductDto createProductSpecifications( @Valid @RequestBody final List< ProductSpecificationCategoryCreateDto > aCreateDtos,
+                                                   @PathVariable( "productId" ) final Long aProductId )
+    {
+        return productService.createProductSpecifications( aCreateDtos, aProductId );
     }
 }
