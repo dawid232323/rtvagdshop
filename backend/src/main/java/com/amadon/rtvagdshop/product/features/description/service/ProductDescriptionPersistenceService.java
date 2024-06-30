@@ -35,4 +35,9 @@ class ProductDescriptionPersistenceService
         }
         return productDescription.get();
     }
+
+    public void saveProductDescription( final ProductDescription aProductDescription )
+    {
+        productDescriptionRepository.save( aProductDescription );
+    }
 }

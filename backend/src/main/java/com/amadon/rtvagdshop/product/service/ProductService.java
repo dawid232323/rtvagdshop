@@ -2,6 +2,7 @@ package com.amadon.rtvagdshop.product.service;
 
 import com.amadon.rtvagdshop.category.entity.Category;
 import com.amadon.rtvagdshop.product.entity.Product;
+import com.amadon.rtvagdshop.product.features.description.service.ProductDescriptionService;
 import com.amadon.rtvagdshop.product.features.specification.entity.ProductSpecificationCategory;
 import com.amadon.rtvagdshop.product.features.specification.service.ProductSpecificationService;
 import com.amadon.rtvagdshop.product.features.specification.service.dto.ProductSpecificationCategoryCreateDto;
@@ -35,6 +36,7 @@ public class ProductService
 
     private final ProductSpecificationService specificationService;
     private final ProductVariantService variantService;
+    private final ProductDescriptionService descriptionService;
 
     private final List< ProductCreatorStrategy > creatorStrategies;
 
@@ -79,6 +81,13 @@ public class ProductService
         persistenceService.saveProduct( product );
 
         return productMapper.mapToDto( product );
+    }
+
+    public String createProductDescription( final String aProductDescription, final Long aProductId )
+    {
+        final Product product = getProduct( aProductId );
+        descriptionService.createDescriptionForProduct( aProductDescription, product );
+        return aProductDescription;
     }
 
     public Page< ProductSearchResultDto > searchForProducts( final ProductSearchQueryDto aSearchQueryDto,

@@ -12,6 +12,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -57,5 +58,12 @@ public class ProductController
                                                    @PathVariable( "productId" ) final Long aProductId )
     {
         return productService.createProductSpecifications( aCreateDtos, aProductId );
+    }
+
+    @PostMapping( value = "/descriptions/{productId}", produces = MediaType.TEXT_HTML_VALUE, consumes = MediaType.TEXT_HTML_VALUE )
+    @ResponseStatus( HttpStatus.CREATED )
+    public String createProductDescription( @PathVariable( "productId" ) final Long aProductId, @RequestBody final String aDescriptionBody )
+    {
+        return productService.createProductDescription( aDescriptionBody, aProductId );
     }
 }
