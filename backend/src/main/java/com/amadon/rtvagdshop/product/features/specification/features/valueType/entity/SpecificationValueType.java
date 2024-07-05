@@ -2,6 +2,8 @@ package com.amadon.rtvagdshop.product.features.specification.features.valueType.
 
 import lombok.Getter;
 
+import java.util.Arrays;
+
 @Getter
 public enum SpecificationValueType
 {
@@ -22,4 +24,12 @@ public enum SpecificationValueType
         this.typeName = typeName;
     }
 
+    public static SpecificationValueType fromValue( final String aTypeName )
+    {
+        return Arrays.stream( SpecificationValueType.values() )
+                .filter( value -> value.getTypeName()
+                        .equalsIgnoreCase( aTypeName ) )
+                .findFirst()
+                .orElseThrow( IllegalArgumentException::new );
+    }
 }

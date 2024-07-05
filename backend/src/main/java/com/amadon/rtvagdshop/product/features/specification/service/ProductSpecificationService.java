@@ -1,5 +1,6 @@
 package com.amadon.rtvagdshop.product.features.specification.service;
 
+import com.amadon.rtvagdshop.product.entity.Product;
 import com.amadon.rtvagdshop.product.features.specification.entity.ProductSpecification;
 import com.amadon.rtvagdshop.product.features.specification.entity.ProductSpecificationCategory;
 import com.amadon.rtvagdshop.product.features.specification.service.dto.ProductSpecificationCategoryCreateDto;
@@ -10,6 +11,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -19,12 +21,13 @@ public class ProductSpecificationService
     private final ProductSpecificationMapper specificationMapper;
     private final ProductSpecificationCategoryMapper categoryMapper;
 
-    public List< ProductSpecificationCategory > createSpecificationForProduct(
-            final List< ProductSpecificationCategoryCreateDto > aCategoryCreateDtos )
+    public void createSpecificationForProduct(
+            final List< ProductSpecificationCategoryCreateDto > aCategoryCreateDtos, final Product aProduct )
     {
-        return aCategoryCreateDtos.stream()
+        final List< ProductSpecificationCategory > specificationCategories = aCategoryCreateDtos.stream()
                 .map( this::resolveSpecificationCategory )
-                .toList();
+                .collect( Collectors.toList() );
+        setProductRelations( specificationCategories, aProduct );
     }
 
     private ProductSpecificationCategory resolveSpecificationCategory( final ProductSpecificationCategoryCreateDto createCategoryDto )
@@ -33,6 +36,7 @@ public class ProductSpecificationService
         final List< ProductSpecification > specifications =
                 resolveProductSpecifications( createCategoryDto.getProductSpecifications() );
         category.setProductSpecifications( specifications );
+        specifications.forEach( specification -> specification.setSpecificationCategory( category ) );
         return category;
     }
 
@@ -40,6 +44,13 @@ public class ProductSpecificationService
     {
         return aCreateDtos.stream()
                 .map( specificationMapper::mapToEntityFromCreateDto )
-                .toList();
+                .collect( Collectors.toList() );
+    }
+
+    private void setProductRelations( final List< ProductSpecificationCategory > aSpecificationCategories,
+                                      final Product aProduct )
+    {
+        aProduct.setSpecificationCategories( aSpecificationCategories );
+        aSpecificationCategories.forEach( category -> category.setProduct( aProduct ) );
     }
 }

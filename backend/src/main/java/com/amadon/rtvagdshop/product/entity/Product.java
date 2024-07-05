@@ -8,6 +8,7 @@ import com.amadon.rtvagdshop.product.features.variant.entity.ProductVariantCateg
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -27,6 +28,7 @@ public class Product
     @Column( name = "id", nullable = false )
     private Long id;
 
+    @Builder.Default
     @Setter( AccessLevel.NONE )
     @Column( name = "uuid", nullable = false, length = 50 )
     private String uuid = UUID.randomUUID().toString();
@@ -42,16 +44,18 @@ public class Product
             cascade = { CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH } )
     @JoinTable(
             name = "products_products_categories",
-            joinColumns = { @JoinColumn( name = "product_category_id" ) },
-            inverseJoinColumns = { @JoinColumn( name = "product_id" ) }
+            joinColumns = { @JoinColumn( name = "product_id" ) },
+            inverseJoinColumns = { @JoinColumn( name = "product_category_id" ) }
     )
     List< ProductCategory > categories;
 
-    @OneToMany( mappedBy = "product" )
-    private List< ProductSpecificationCategory > specificationCategories;
+    @Builder.Default
+    @OneToMany( mappedBy = "product", cascade = CascadeType.ALL )
+    private List< ProductSpecificationCategory > specificationCategories = new ArrayList<>();
 
-    @OneToMany( mappedBy = "product" )
-    private List< ProductVariantCategory > variantCategories;
+    @Builder.Default
+    @OneToMany( mappedBy = "product", cascade = CascadeType.ALL )
+    private List< ProductVariantCategory > variantCategories = new ArrayList<>();
 
     @OneToOne( mappedBy = "product" )
     private ProductDescription description;

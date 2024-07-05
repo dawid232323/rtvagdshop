@@ -22,7 +22,7 @@ public class InitProductDto implements Serializable
 
     @NotNull
     @Min( 1 )
-    @Max( 100000 )
+    @Max( 10000000 )
     private Long basePrice;
 
     @NotNull

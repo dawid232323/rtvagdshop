@@ -23,15 +23,17 @@ public class ProductVariantService
     {
         return aCategoryCreateDtos.stream()
                 .map( this::resolveVariantCategory )
-                .toList();
+                .collect( Collectors.toList() );
     }
 
 
     private ProductVariantCategory resolveVariantCategory( final ProductVariantCategoryCreateDto aCreateDto )
     {
         final ProductVariantCategory variantCategory = categoryMapper.createFromDto( aCreateDto );
+        variantCategory.setIsAvailable( true );
         final List< ProductVariantDetail > details = resolveProductVariantDetail( aCreateDto.getVariantDetails() );
         variantCategory.setVariantDetails( details );
+        details.forEach( detail -> detail.setVariantCategory( variantCategory ) );
         return variantCategory;
     }
 
@@ -41,7 +43,6 @@ public class ProductVariantService
                 .map( detailMapper::createFromDto )
                 .peek( detail ->
                 {
-                    detail.setIsAvailable( true );
                     detail.setIsAvailable( true );
                 } )
                 .collect( Collectors.toList() );

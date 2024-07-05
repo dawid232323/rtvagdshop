@@ -23,10 +23,6 @@ public class SpecificationValueTypeAttributeConverter implements AttributeConver
     @Override
     public SpecificationValueType convertToEntityAttribute( final String aS )
     {
-        return Arrays.stream( SpecificationValueType.values() )
-                .filter( value -> value.getTypeName()
-                        .equalsIgnoreCase( aS ) )
-                .findFirst()
-                .orElseThrow( IllegalArgumentException::new );
+        return SpecificationValueType.fromValue( aS );
     }
 }

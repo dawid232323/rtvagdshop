@@ -1,27 +1,22 @@
 package com.amadon.rtvagdshop.product.service;
 
-import com.amadon.rtvagdshop.category.entity.Category;
 import com.amadon.rtvagdshop.product.entity.Product;
 import com.amadon.rtvagdshop.product.features.description.service.ProductDescriptionService;
-import com.amadon.rtvagdshop.product.features.specification.entity.ProductSpecificationCategory;
 import com.amadon.rtvagdshop.product.features.specification.service.ProductSpecificationService;
 import com.amadon.rtvagdshop.product.features.specification.service.dto.ProductSpecificationCategoryCreateDto;
 import com.amadon.rtvagdshop.product.features.variant.entity.ProductVariantCategory;
-import com.amadon.rtvagdshop.product.features.variant.entity.ProductVariantDetail;
 import com.amadon.rtvagdshop.product.features.variant.service.ProductVariantService;
 import com.amadon.rtvagdshop.product.features.variant.service.dto.ProductVariantCategoryCreateDto;
 import com.amadon.rtvagdshop.product.service.creator.ProductCreatorStrategy;
 import com.amadon.rtvagdshop.product.service.dto.*;
 import com.amadon.rtvagdshop.product.service.exception.LackOfCreateStrategyException;
-import com.amadon.rtvagdshop.product.service.exception.ProductNotFoundException;
 import com.amadon.rtvagdshop.product.service.mapper.ProductMapper;
-import com.amadon.rtvagdshop.product.service.repository.ProductRepository;
 import com.amadon.rtvagdshop.product.service.util.CategoryPathBuilder;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Objects;
@@ -50,6 +45,7 @@ public class ProductService
         return persistenceService.getProduct( aProductId );
     }
 
+    @Transactional
     public ProductDto initProduct( final InitProductDto aInitProductDto )
     {
         final ProductCreatorStrategy strategy = resolveCreateStrategy();
@@ -57,19 +53,19 @@ public class ProductService
         return productMapper.mapToDto( persistenceService.saveProduct( createdProduct ) );
     }
 
+    @Transactional
     public ProductDto createProductSpecifications( final List< ProductSpecificationCategoryCreateDto > aCreateDtos,
                                                    final Long aProductId )
     {
         final Product product = getProduct( aProductId );
-        final List< ProductSpecificationCategory > specificationCategories =
-                specificationService.createSpecificationForProduct( aCreateDtos );
+        specificationService.createSpecificationForProduct( aCreateDtos, product );
 
-        product.setSpecificationCategories( specificationCategories );
         persistenceService.saveProduct( product );
 
         return productMapper.mapToDto( product );
     }
 
+    @Transactional
     public ProductDto createProductVariants( final List< ProductVariantCategoryCreateDto > aCategoryCreateDtos,
                                              final Long aProductId )
     {
@@ -78,11 +74,13 @@ public class ProductService
                 variantService.createVariantsForProduct( aCategoryCreateDtos );
 
         product.setVariantCategories( variantCategories );
+        variantCategories.forEach( category -> category.setProduct( product ) );
         persistenceService.saveProduct( product );
 
         return productMapper.mapToDto( product );
     }
 
+    @Transactional
     public String createProductDescription( final String aProductDescription, final Long aProductId )
     {
         final Product product = getProduct( aProductId );

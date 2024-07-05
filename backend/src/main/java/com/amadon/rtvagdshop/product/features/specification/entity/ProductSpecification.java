@@ -24,12 +24,13 @@ public class ProductSpecification
     @Column( name = "id", nullable = false )
     private Long id;
 
+    @Builder.Default
     @Setter( AccessLevel.NONE )
     @Column( name = "uuid", nullable = false, length = 50 )
     private String uuid = UUID.randomUUID()
             .toString();
 
-    @ManyToOne( fetch = FetchType.EAGER, optional = false )
+    @ManyToOne( fetch = FetchType.EAGER, cascade = CascadeType.ALL, optional = false )
     @JoinColumn( name = "specification_category_id", nullable = false )
     private ProductSpecificationCategory specificationCategory;
 

@@ -2,6 +2,8 @@ package com.amadon.rtvagdshop.product.features.specification.service.dto;
 
 import com.amadon.rtvagdshop.product.features.specification.features.valueType.entity.SpecificationValueType;
 import com.amadon.rtvagdshop.product.features.specification.service.ProductSpecificationIf;
+import com.amadon.rtvagdshop.product.features.specification.service.converter.SpecificationValueTypeDeserializer;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
@@ -15,7 +17,7 @@ import java.util.List;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class ProductSpecificationCreateDto implements ProductSpecificationIf< String >
+public class ProductSpecificationCreateDto implements ProductSpecificationIf< Object >
 {
     @NotNull
     @Size( min = 2, max = 50 )
@@ -26,13 +28,13 @@ public class ProductSpecificationCreateDto implements ProductSpecificationIf< St
     private String displayName;
 
     @NotNull
+    @JsonDeserialize( using = SpecificationValueTypeDeserializer.class )
     private SpecificationValueType valueType;
 
-    @NotNull
     private String unit;
 
     @NotNull
-    private String value;
+    private Object value;
 
     private boolean isDescriptionAvailable;
 
@@ -40,7 +42,7 @@ public class ProductSpecificationCreateDto implements ProductSpecificationIf< St
     private List< String > onlyAvailableInVariants;
 
     @Override
-    public String getSpecificationValue()
+    public Object getSpecificationValue()
     {
         return this.value;
     }

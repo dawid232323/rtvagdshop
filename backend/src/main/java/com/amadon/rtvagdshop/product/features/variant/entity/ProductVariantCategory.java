@@ -2,9 +2,7 @@ package com.amadon.rtvagdshop.product.features.variant.entity;
 
 import com.amadon.rtvagdshop.product.entity.Product;
 import jakarta.persistence.*;
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
 
 import java.util.List;
@@ -13,6 +11,9 @@ import java.util.UUID;
 @Getter
 @Setter
 @Entity
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @Table( name = "product_variant_categories" )
 public class ProductVariantCategory
 {
@@ -25,11 +26,12 @@ public class ProductVariantCategory
     private Long id;
 
     @Setter( AccessLevel.NONE )
+    @Builder.Default
     @Column( name = "uuid", nullable = false, length = 50 )
     private String uuid = UUID.randomUUID()
             .toString();
 
-    @ManyToOne( fetch = FetchType.EAGER, optional = false )
+    @ManyToOne( fetch = FetchType.EAGER, cascade = CascadeType.ALL, optional = false )
     @JoinColumn( name = "product_id", nullable = false )
     private Product product;
 
@@ -40,7 +42,7 @@ public class ProductVariantCategory
     @Column( name = "is_available", nullable = false )
     private Boolean isAvailable;
 
-    @OneToMany( mappedBy = "variantCategory" )
+    @OneToMany( mappedBy = "variantCategory", cascade = CascadeType.ALL, fetch = FetchType.EAGER )
     private List< ProductVariantDetail > variantDetails;
 
 }

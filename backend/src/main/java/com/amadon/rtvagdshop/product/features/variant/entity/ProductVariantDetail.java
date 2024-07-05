@@ -1,13 +1,17 @@
 package com.amadon.rtvagdshop.product.features.variant.entity;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
+
+import java.util.UUID;
 
 @Getter
 @Setter
 @Entity
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @Table( name = "product_variant_details" )
 public class ProductVariantDetail
 {
@@ -18,10 +22,11 @@ public class ProductVariantDetail
     @Column( name = "id", nullable = false )
     private Long id;
 
+    @Builder.Default
     @Column( name = "uuid", nullable = false, length = 50 )
-    private String uuid;
+    private String uuid = UUID.randomUUID().toString();
 
-    @ManyToOne( fetch = FetchType.LAZY, optional = false )
+    @ManyToOne( fetch = FetchType.LAZY,cascade = CascadeType.ALL, optional = false )
     @JoinColumn( name = "variant_category_id", nullable = false )
     private ProductVariantCategory variantCategory;
 
